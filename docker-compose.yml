@@ -28,6 +28,17 @@ services:
     - elasticsearch
     depends_on:
     - elasticsearch
+    
+  logstash:
+    image: logstash:$ELASTIC_VERSION
+    links:
+    - elasticsearch
+    volumes:
+    - ./:/config-dir
+    command: logstash -f /config-dir/logstash.conf
+    depends_on:
+    - elasticsearch
+    networks: ['elastic']
 
 
 networks:
